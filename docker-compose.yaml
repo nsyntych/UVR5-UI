@@ -1,0 +1,25 @@
+services:
+  uvr5-ui:
+    build:
+      context: .
+      dockerfile: Dockerfile.rocm
+    container_name: uvr5-ui
+    ports:
+      - "9999:9999"
+    devices:
+      - /dev/kfd
+      - /dev/dri
+      - /dev/dri/renderD128
+    security_opt:
+      - seccomp=unconfined
+    shm_size: 1g
+    environment:
+      - PYTHONUNBUFFERED=1
+    volumes:
+      - data:/app/input
+      - data:/app/models
+      - data:/app/outputs
+      - data:/app/ytdl
+
+volumes:
+  data:
